@@ -7,34 +7,28 @@ import time
 driver = webdriver.Firefox()
 driver.get("https://www.facebook.com")
 emailelement = driver.find_element(By.XPATH, './/*[@id="email"]')
-emailelement.send_keys("08137045484")
+emailelement.send_keys("your_email_or_mobile")
 
 
 passelement = driver.find_element(By.XPATH, './/*[@id="pass"]')
-passelement.send_keys("modelfranc")
+passelement.send_keys("your_password")
 
 
 loginelement = driver.find_element(By.XPATH, './/*[@id="loginbutton"]')
 loginelement.click()
 
-
-with open("quotes.txt", "r") as f:
-    # length = len(f.readlines())
-    number = 27
-    hut = 26
-    while number > 0:
-        post = f.readline()
-        j = post + ".\n#"+str(hut) + "Left"
-        number -= 1
-        hut -= 1
-
-        print(j)
+# Using a local file for quotes/status
+with open("quotes.txt", "r") as file:
+    total_number_of_quotes = 24
+    for line in file:
+        quote = line + ".\n#"+str(total_number_of_quotes - 1) + "Left"
+        print(quote)
 
         statusupdate = driver.find_element_by_class_name(
             "navigationFocus")
         time.sleep(5)
 
-        statusupdate.send_keys(j)
+        statusupdate.send_keys(quote)
         time.sleep(5)
 
         buttons = driver.find_elements_by_class_name('selected')
@@ -47,3 +41,5 @@ with open("quotes.txt", "r") as f:
 
         time.sleep(5)
         driver.get("https://www.facebook.com")
+
+# Calling an api for random quotes/status
